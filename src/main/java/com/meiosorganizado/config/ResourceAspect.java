@@ -14,9 +14,9 @@ import org.springframework.stereotype.Component;
 public class ResourceAspect {
     //private static final ParamValidatorEngine paramEngine = new ParamValidatorEngine();
 
-    static final String POINTCUT_EXPRESSION = "@annotation(auditable)";
+    //static final String POINTCUT_EXPRESSION = "@annotation(auditable)";
 
-    @Before(POINTCUT_EXPRESSION)
+    //@Before(POINTCUT_EXPRESSION)
     public void beforeResourceMethod(JoinPoint jp) throws InstantiationException, IllegalAccessException {
         val signature = (MethodSignature) jp.getSignature();
         val params = signature.getMethod().getParameters();
@@ -31,7 +31,7 @@ public class ResourceAspect {
 
         }
     }
-     @AfterReturning( pointcut = POINTCUT_EXPRESSION, returning = "result")
+     //@AfterReturning( pointcut = POINTCUT_EXPRESSION, returning = "result")
      public void afterReturningResourceMethod(JoinPoint jp, Object result) throws Exception {
          val signature = (MethodSignature) jp.getSignature();
          //val rebete = signature.getMethod().getAnnotation(ResponseEntityBodyEmptyThenException.class);
