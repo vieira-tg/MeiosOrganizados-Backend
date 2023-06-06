@@ -31,7 +31,7 @@ public class ResourceAspect {
 
         }
     }
-     //@AfterReturning( pointcut = POINTCUT_EXPRESSION, returning = "result")
+     //cd@AfterReturning( pointcut = POINTCUT_EXPRESSION, returning = "result")
      public void afterReturningResourceMethod(JoinPoint jp, Object result) throws Exception {
          val signature = (MethodSignature) jp.getSignature();
          //val rebete = signature.getMethod().getAnnotation(ResponseEntityBodyEmptyThenException.class);

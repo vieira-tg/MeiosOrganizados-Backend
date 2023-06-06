@@ -1,26 +1,40 @@
 spring:
   profiles: dev
-application:
-  name: Meios Organizados
+  application:
+    name: Meios Organizados (DEV)
 
-datasource:
-  driverClassName: com.mysql.cj.jdbc.Driver
-  url: jdbc:mysql://localhost:3306/meiosorganizado?createDatabaseIfNotExist=true
-  username: root
-  password: root
-jpa:
-  hibernate.ddl-auto: validate
-  generate-ddl: true
-  show-sql: true
-server:
-    port: 9000
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/meiosorganizado?createDatabaseIfNotExist=true
+    username: root
+    password: root
+
+  server:
+    port: 8787
+
+  jpa:
+    hibernate.ddl-auto: validate
+    generate-ddl: true
+    show-sql: true
+
+
 
 ---
-
 spring:
   profiles: prod
-server:
+  application:
+    name: Meios Organizados (PROD)
+
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3307/meiosorganizado?createDatabaseIfNotExist=true
+    username: root
+    password: root
+
+  jpa:
+    hibernate.ddl-auto: validate
+    generate-ddl: true
+    show-sql: true
+
+  server:
     port: 9001
-
-
-

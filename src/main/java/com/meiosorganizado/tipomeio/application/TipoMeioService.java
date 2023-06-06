@@ -3,9 +3,9 @@ package com.meiosorganizado.tipomeio.application;
 import com.meiosorganizado.tipomeio.application.dto.TipoMeioDTO;
 import com.meiosorganizado.tipomeio.domain.TipoMeio;
 import com.meiosorganizado.tipomeio.domain.TipoMeioRepository;
+import exception.NegocioException;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -30,5 +30,10 @@ public class TipoMeioService {
         tipoMeioEntidade.setNome(tipoMeio.getNome());
 
         return this.tipoMeioRepository.save(tipoMeioEntidade);
+    }
+
+    public TipoMeio findbyId(Long id){
+        return this.tipoMeioRepository.findById(id)
+                .orElseThrow(() -> new NegocioException());
     }
 }
