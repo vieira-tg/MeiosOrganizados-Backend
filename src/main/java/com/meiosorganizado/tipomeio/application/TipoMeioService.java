@@ -8,32 +8,48 @@ import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TipoMeioService {
-
     @Autowired
     private TipoMeioRepository tipoMeioRepository;
 
-    public TipoMeio save(TipoMeioDTO tipoMeio) {
-        val tipoMeioEntidade = this.tipoMeioRepository.findById(tipoMeio.getId()).orElse(new TipoMeio());
+    public TipoMeio save(TipoMeioDTO tipoMeioDto) {
 
-        if(tipoMeioEntidade != null){
+        verificarNomeRepetido(tipoMeioDto.getId(), tipoMeioDto.getNome());
 
-            if(tipoMeioEntidade.getId() != tipoMeio.getId()
-                    && tipoMeioEntidade.getNome().toUpperCase().equals(tipoMeio.getNome().toUpperCase())){
-
-            }
-
-        }
-
-        tipoMeioEntidade.setId(tipoMeio.getId());
-        tipoMeioEntidade.setNome(tipoMeio.getNome());
+        val tipoMeioEntidade = TipoMeio.builder()
+                .id(tipoMeioDto.getId())
+                .nome(tipoMeioDto.getNome())
+                .build();
 
         return this.tipoMeioRepository.save(tipoMeioEntidade);
     }
 
-    public TipoMeio findbyId(Long id){
+    public TipoMeio update(TipoMeioDTO tipoMeioDto) {
+
+        val entidade = this.findbyId(tipoMeioDto.getId());
+
+        verificarNomeRepetido(entidade.getId(), tipoMeioDto.getNome());
+
+        entidade.setNome(tipoMeioDto.getNome());
+
+        return this.tipoMeioRepository.save(entidade);
+    }
+
+    public TipoMeio findbyId(Long id) {
         return this.tipoMeioRepository.findById(id)
-                .orElseThrow(() -> new NegocioException());
+                .orElseThrow(() -> new NegocioException("Tipo com o id " + id + " não encontrado!"));
+    }
+
+    private void verificarNomeRepetido(Long codigo, String nome) {
+        if (this.tipoMeioRepository.verificarExistenciaNomeIgual(codigo, nome)) {
+            throw new NegocioException("Já existe um tipo com esse nome cadastrado!");
+        }
+    }
+
+    public List<TipoMeio> findByNomeContainingIgnoreCase(String nome) {
+        return this.tipoMeioRepository.findByNomeContainingIgnoreCase(nome);
     }
 }
