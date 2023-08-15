@@ -35,5 +35,15 @@ public class Citacao {
 
     @Column(name = "DATA_HORA_ALTERACAO")
     private LocalDateTime dataHoraAlteracao;
+
+    @PrePersist
+    public void prePersist() {
+        dataHoraCadastro = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        dataHoraAlteracao = LocalDateTime.now();
+    }
 }
 

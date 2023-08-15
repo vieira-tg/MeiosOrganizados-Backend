@@ -68,7 +68,7 @@ class TipoMeioServiceTest {
         when(tipoMeioRepository.save(any(TipoMeio.class))).thenReturn(tipoMeioEntidade);
 
         // When
-        TipoMeio updatedTipoMeio = tipoMeioService.update(tipoMeioDto);
+        val updatedTipoMeio = tipoMeioService.update(tipoMeioDto);
 
         // Then
         assertNotNull(updatedTipoMeio);
@@ -88,7 +88,7 @@ class TipoMeioServiceTest {
         when(tipoMeioRepository.findById(1L)).thenReturn(Optional.of(tipoMeioEntidade));
 
         // When
-        TipoMeio foundTipoMeio = tipoMeioService.findbyId(1L);
+        val foundTipoMeio = tipoMeioService.findbyId(1L);
 
         // Then
         assertNotNull(foundTipoMeio);
@@ -120,7 +120,7 @@ class TipoMeioServiceTest {
         when(tipoMeioRepository.findByNomeContainingIgnoreCase("Tipo")).thenReturn(tipoMeios);
 
         // When
-        List<TipoMeio> foundTipoMeios = tipoMeioService.findByNomeContainingIgnoreCase("Tipo");
+        val foundTipoMeios = tipoMeioService.findByNomeContainingIgnoreCase("Tipo");
 
         // Then
         assertNotNull(foundTipoMeios);

@@ -1,12 +1,14 @@
 package com.meiosorganizado.meio.domain;
 
 import com.meiosorganizado.tipomeio.domain.TipoMeio;
+import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Data
+@Builder
 @Entity
 @Table(name = "MEIO")
 public class Meio {
@@ -24,4 +26,9 @@ public class Meio {
 
     @Column(name = "DATA_HORA_CADASTRO")
     private LocalDateTime dataHoraCadastro;
+
+    @PrePersist
+    public void prePersist() {
+        dataHoraCadastro = LocalDateTime.now();
+    }
 }

@@ -1,10 +1,19 @@
 package com.meiosorganizado.meio.domain;
 
-import com.meiosorganizado.tipomeio.domain.TipoMeio;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface MeioRepository extends JpaRepository<Meio, Long> {
 
+    @Query(" SELECT CASE WHEN COUNT(u) > 0 THEN true ELSE false END FROM Meio u " +
+            " WHERE upper(u.nome) = upper(:nome) " +
+            " and (:id is null or u.id <> :id) ")
+    Boolean verificarExistenciaNomeIgual(@Param("id") Long id, @Param("nome") String nome);
+
+    List<Meio> findByNomeContainingIgnoreCase(String nome);
 }

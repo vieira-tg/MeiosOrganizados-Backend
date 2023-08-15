@@ -12,6 +12,7 @@ import java.util.List;
 
 @Service
 public class TipoMeioService {
+
     @Autowired
     private TipoMeioRepository tipoMeioRepository;
 
