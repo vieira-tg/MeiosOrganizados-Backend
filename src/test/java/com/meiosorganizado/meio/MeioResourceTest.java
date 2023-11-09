@@ -22,7 +22,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
-@WebMvcTest(AssuntoCitacaoResource.class)
+@WebMvcTest(MeioResource.class)
 public class MeioResourceTest {
 
     private String path = MeioResource.PATH;

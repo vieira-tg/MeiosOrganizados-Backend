@@ -8,12 +8,14 @@ import com.meiosorganizado.autor.domain.Autor;
 import com.meiosorganizado.autor.domain.AutorRepository;
 import exception.NegocioException;
 import lombok.val;
+import org.apache.tomcat.jni.Local;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -55,7 +57,7 @@ class AutorServiceTest {
         assertNotNull(savedAutor);
         assertEquals(1L, savedAutor.getId());
         assertEquals(autor.getNome(), savedAutor.getNome());
-        assertEquals(autor.getNomeReferenciaBibliografica(), savedAutor.getNome());
+        assertEquals(autor.getNomeReferenciaBibliografica(), savedAutor.getNomeReferenciaBibliografica());
         assertEquals(autor.getDataFalecimento(), savedAutor.getDataFalecimento());
         assertEquals(autor.getDataNascimento(), savedAutor.getDataNascimento());
 
@@ -80,7 +82,7 @@ class AutorServiceTest {
         assertNotNull(updatedAutor);
         assertEquals(1L, updatedAutor.getId());
         assertEquals(autor.getNome(), updatedAutor.getNome());
-        assertEquals(autor.getNomeReferenciaBibliografica(), updatedAutor.getNome());
+        assertEquals(autor.getNomeReferenciaBibliografica(), updatedAutor.getNomeReferenciaBibliografica());
         assertEquals(autor.getDataFalecimento(), updatedAutor.getDataFalecimento());
         assertEquals(autor.getDataNascimento(), updatedAutor.getDataNascimento());
 
@@ -103,7 +105,7 @@ class AutorServiceTest {
         assertNotNull(foundAutor);
         assertEquals(1L, foundAutor.getId());
         assertEquals(autor.getNome(), foundAutor.getNome());
-        assertEquals(autor.getNomeReferenciaBibliografica(), foundAutor.getNome());
+        assertEquals(autor.getNomeReferenciaBibliografica(), foundAutor.getNomeReferenciaBibliografica());
         assertEquals(autor.getDataFalecimento(), foundAutor.getDataFalecimento());
         assertEquals(autor.getDataNascimento(), foundAutor.getDataNascimento());
 
@@ -124,20 +126,35 @@ class AutorServiceTest {
     @Test
     void testFindByNomeContainingIgnoreCase() {
         // Given
-        List<AssuntoCitacao> assuntos = new ArrayList<>();
-        assuntos.add(AssuntoCitacao.builder().id(1L).descricao("Descricao 1").build());
-        assuntos.add(AssuntoCitacao.builder().id(2L).descricao("Descricao 2").build());
-        assuntos.add(AssuntoCitacao.builder().id(3L).descricao("Outro Descricao").build());
+        List<Autor> assuntos = new ArrayList<>();
+        assuntos.add(Autor.builder().id(1L)
+                .nome("nome 1")
+                .nomeReferenciaBibliografica("nome bibliografico")
+                .dataFalecimento(LocalDate.now())
+                .dataFalecimento(LocalDate.now())
+                .build());
+        assuntos.add(Autor.builder().id(2L)
+                .nome("nome 2")
+                .nomeReferenciaBibliografica("nome bibliografico")
+                .dataFalecimento(LocalDate.now())
+                .dataFalecimento(LocalDate.now())
+                .build());
+        assuntos.add(Autor.builder().id(3L)
+                .nome("nome 3")
+                .nomeReferenciaBibliografica("nome bibliografico")
+                .dataFalecimento(LocalDate.now())
+                .dataFalecimento(LocalDate.now())
+                .build());
 
-        when(assuntoCitacaoRepository.findByDescricaoContainingIgnoreCase("Descricao")).thenReturn(assuntos);
+        when(autorRepository.findByNomeContainingIgnoreCase("nome")).thenReturn(assuntos);
 
         // When
-        val foundAssuntos = assuntoCitacaoService.findByDescricaoContainingIgnoreCase("Descricao");
+        val foundAssuntos = autorService.findByNomeContainingIgnoreCase("nome");
 
         // Then
         assertNotNull(foundAssuntos);
         assertEquals(3, foundAssuntos.size());
 
-        verify(assuntoCitacaoRepository, times(1)).findByDescricaoContainingIgnoreCase("Descricao");
+        verify(autorRepository, times(1)).findByNomeContainingIgnoreCase("nome");
     }
 }

@@ -7,6 +7,8 @@ import com.meiosorganizado.autor.domain.AutorRepository;
 import com.meiosorganizado.meio.application.MeioService;
 import com.meiosorganizado.meio.domain.Meio;
 import com.meiosorganizado.meio.domain.MeioRepository;
+import com.meiosorganizado.tipomeio.TipoMeioMock;
+import com.meiosorganizado.tipomeio.domain.TipoMeioRepository;
 import exception.NegocioException;
 import lombok.val;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,6 +34,9 @@ class MeioServiceTest {
     @Mock
     private MeioRepository meioRepository;
 
+    @Mock
+    private TipoMeioRepository tipoMeioRepository;
+
     @InjectMocks
     private MeioService meioService;
 
@@ -47,6 +52,7 @@ class MeioServiceTest {
         val meio = MeioMock.umMeio().id(1l).build();
 
         when(meioRepository.verificarExistenciaNomeIgual(any(), any())).thenReturn(false);
+        when(tipoMeioRepository.findById(any())).thenReturn(Optional.ofNullable(TipoMeioMock.umTipoMeio().build()));
         when(meioRepository.save(any(Meio.class))).thenReturn(meio);
 
         // When
@@ -134,7 +140,7 @@ class MeioServiceTest {
         when(meioRepository.findByNomeContainingIgnoreCase("nome")).thenReturn(meios);
 
         // When
-        val foundMeios = meioService.findByNomeContainingIgnoreCase("Descricao");
+        val foundMeios = meioService.findByNomeContainingIgnoreCase("nome");
 
         // Then
         assertNotNull(foundMeios);

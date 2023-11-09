@@ -2,8 +2,9 @@ package com.meiosorganizado.autor;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.meiosorganizado.assuntocitacao.api.AssuntoCitacaoResource;
-import com.meiosorganizado.assuntocitacao.application.AssuntoCitacaoService;
-import com.meiosorganizado.assuntocitacao.application.dto.AssuntoCitacaoDTO;
+import com.meiosorganizado.autor.api.AutorResource;
+import com.meiosorganizado.autor.application.AutorService;
+import com.meiosorganizado.autor.application.dto.AutorDTO;
 import lombok.val;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,75 +22,87 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
-@WebMvcTest(AssuntoCitacaoResource.class)
+@WebMvcTest(AutorResource.class)
 public class AutorResourceTest {
 
-    private String path = AssuntoCitacaoResource.PATH;
+    private String path = AutorResource.PATH;
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private AssuntoCitacaoService assuntoCitacaoService;
+    private AutorService autorService;
 
     @Test
     void testCriarTipo() throws Exception {
-        val assuntoCitacaoDto = AutorMock.umAssuntoCitacaoDTO().id(1l).build();
-        val assuntoCitacao = AutorMock.umAssuntoCitacao().id(1l).build();
+        val autorDto = AutorMock.umAutorDTO().id(1l).build();
+        val autor = AutorMock.umAutor().id(1l).build();
 
-        when(assuntoCitacaoService.save(any(AssuntoCitacaoDTO.class))).thenReturn(assuntoCitacao);
+        when(autorService.save(any(AutorDTO.class))).thenReturn(autor);
 
         ObjectMapper objectMapper = new ObjectMapper();
-        String tipoMeioDTOJson = objectMapper.writeValueAsString(assuntoCitacaoDto);
+        String tipoMeioDTOJson = objectMapper.writeValueAsString(autorDto);
 
         mockMvc.perform(MockMvcRequestBuilders.post(path)
                         .content(tipoMeioDTOJson)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id", is(assuntoCitacaoDto.getId().intValue())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.descricao", is(assuntoCitacaoDto.getDescricao())));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id", is(autorDto.getId().intValue())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.nome", is(autorDto.getNome())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.nomeReferenciaBibliografica", is(autorDto.getNomeReferenciaBibliografica())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.dataNascimento", is(autorDto.getDataNascimento())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.dataFalecimento", is(autorDto.getDataFalecimento())));
     }
+
     @Test
     public void buscarAssuntoCitacaoPorId_DeveRetornarStatusOk() throws Exception {
-        val assuntoCitacao = AutorMock.umAssuntoCitacao().id(1l).build();
+        val autor = AutorMock.umAutor().id(1l).build();
 
-        when(assuntoCitacaoService.findbyId(anyLong())).thenReturn(assuntoCitacao);
+        when(autorService.findbyId(anyLong())).thenReturn(autor);
 
         mockMvc.perform(MockMvcRequestBuilders.get(path + "/1"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id", is(assuntoCitacao.getId().intValue())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.descricao", is(assuntoCitacao.getDescricao())));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id", is(autor.getId().intValue())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.nome", is(autor.getNome())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.nomeReferenciaBibliografica", is(autor.getNomeReferenciaBibliografica())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.dataNascimento", is(autor.getDataNascimento())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.dataFalecimento", is(autor.getDataFalecimento())));
     }
 
     @Test
     public void atualizarTipoMeio_DeveRetornarStatusOk() throws Exception {
-        val assuntoCitacaoDTO = AutorMock.umAssuntoCitacaoDTO().id(1l).build();
+        val autorDto = AutorMock.umAutorDTO().id(1l).build();
 
-        val assuntoCitacao = AutorMock.umAssuntoCitacao().id(1l).build();
+        val autor = AutorMock.umAutor().id(1l).build();
 
-        when(assuntoCitacaoService.save(any(AssuntoCitacaoDTO.class))).thenReturn(assuntoCitacao);
+        when(autorService.save(any(AutorDTO.class))).thenReturn(autor);
 
         ObjectMapper objectMapper = new ObjectMapper();
-        String tipoMeioDTOJson = objectMapper.writeValueAsString(assuntoCitacaoDTO);
+        String tipoMeioDTOJson = objectMapper.writeValueAsString(autorDto);
 
         mockMvc.perform(MockMvcRequestBuilders.put(path)
                         .content(tipoMeioDTOJson)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id", is(assuntoCitacaoDTO.getId().intValue())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.descricao", is(assuntoCitacaoDTO.getDescricao())));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id", is(autorDto.getId().intValue())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.nome", is(autorDto.getNome())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.nomeReferenciaBibliografica", is(autorDto.getNomeReferenciaBibliografica())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.dataNascimento", is(autorDto.getDataNascimento())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.dataFalecimento", is(autorDto.getDataFalecimento())));
     }
 
     @Test
     public void pesquisarTipoMeioPorNome_DeveRetornarStatusOk() throws Exception {
-        val assuntoCitacao = AutorMock.umAssuntoCitacao().id(1l).build();
+        val autor = AutorMock.umAutor().id(1l).build();
 
-        when(assuntoCitacaoService.findByDescricaoContainingIgnoreCase(any(String.class)))
-                .thenReturn(Collections.singletonList(assuntoCitacao));
+        when(autorService.findByNomeContainingIgnoreCase(any(String.class)))
+                .thenReturn(Collections.singletonList(autor));
 
         mockMvc.perform(MockMvcRequestBuilders.get(path + "/pesquisar?nome=Teste"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id", is(assuntoCitacao.getId().intValue())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].descricao", is(assuntoCitacao.getDescricao())));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id", is(autor.getId().intValue())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.nome", is(autor.getNome())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.nomeReferenciaBibliografica", is(autor.getNomeReferenciaBibliografica().toString())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.dataNascimento", is(autor.getDataNascimento())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.dataFalecimento", is(autor.getDataFalecimento())));
     }
 }
