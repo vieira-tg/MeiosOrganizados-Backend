@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.Collections;
 
+import static java.time.format.DateTimeFormatter.ofPattern;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -50,8 +51,8 @@ public class AutorResourceTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id", is(autorDto.getId().intValue())))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.nome", is(autorDto.getNome())))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.nomeReferenciaBibliografica", is(autorDto.getNomeReferenciaBibliografica())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.dataNascimento", is(autorDto.getDataNascimento())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.dataFalecimento", is(autorDto.getDataFalecimento())));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.dataNascimento", is(autorDto.getDataNascimento().format(ofPattern("MM/dd/yyyy")))))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.dataFalecimento", is(autorDto.getDataFalecimento().format(ofPattern("MM/dd/yyyy")))));
     }
 
     @Test
@@ -65,8 +66,8 @@ public class AutorResourceTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id", is(autor.getId().intValue())))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.nome", is(autor.getNome())))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.nomeReferenciaBibliografica", is(autor.getNomeReferenciaBibliografica())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.dataNascimento", is(autor.getDataNascimento())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.dataFalecimento", is(autor.getDataFalecimento())));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.dataNascimento", is(autor.getDataNascimento().format(ofPattern("MM/dd/yyyy")))))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.dataFalecimento", is(autor.getDataFalecimento().format(ofPattern("MM/dd/yyyy")))));
     }
 
     @Test
@@ -87,8 +88,8 @@ public class AutorResourceTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id", is(autorDto.getId().intValue())))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.nome", is(autorDto.getNome())))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.nomeReferenciaBibliografica", is(autorDto.getNomeReferenciaBibliografica())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.dataNascimento", is(autorDto.getDataNascimento())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.dataFalecimento", is(autorDto.getDataFalecimento())));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.dataNascimento", is(autorDto.getDataNascimento().format(ofPattern("MM/dd/yyyy")))))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.dataFalecimento", is(autorDto.getDataFalecimento().format(ofPattern("MM/dd/yyyy")))));
     }
 
     @Test
@@ -99,10 +100,10 @@ public class AutorResourceTest {
                 .thenReturn(Collections.singletonList(autor));
 
         mockMvc.perform(MockMvcRequestBuilders.get(path + "/pesquisar?nome=Teste"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id", is(autor.getId().intValue())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.nome", is(autor.getNome())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.nomeReferenciaBibliografica", is(autor.getNomeReferenciaBibliografica().toString())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.dataNascimento", is(autor.getDataNascimento())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.dataFalecimento", is(autor.getDataFalecimento())));
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id", is(autor.getId().intValue())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].nome", is(autor.getNome())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].nomeReferenciaBibliografica", is(autor.getNomeReferenciaBibliografica().toString())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].dataNascimento", is(autor.getDataNascimento().format(ofPattern("MM/dd/yyyy")))))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].dataFalecimento", is(autor.getDataFalecimento().format(ofPattern("MM/dd/yyyy")))));
     }
 }

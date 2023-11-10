@@ -1,5 +1,6 @@
 package com.meiosorganizado.autor.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -34,10 +35,12 @@ public class Autor {
     @Column(name = "DATA_NASCIMENTO")
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonFormat(pattern = "MM/dd/yyyy")
     private LocalDate dataNascimento;
 
     @Column(name = "DATA_FALECIMENTO")
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonFormat(pattern = "MM/dd/yyyy")
     private LocalDate dataFalecimento;
 }

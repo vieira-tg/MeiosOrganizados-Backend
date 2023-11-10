@@ -1,5 +1,6 @@
 package com.meiosorganizado.autor.application.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -28,9 +29,11 @@ public class AutorDTO {
     @NotNull(message = "É necessário informar a data de nascimento!")
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonFormat(pattern = "MM/dd/yyyy")
     private LocalDate dataNascimento;
 
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonFormat(pattern = "MM/dd/yyyy")
     private LocalDate dataFalecimento;
 }

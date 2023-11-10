@@ -1,7 +1,6 @@
 package com.meiosorganizado.meio;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.meiosorganizado.assuntocitacao.api.AssuntoCitacaoResource;
 import com.meiosorganizado.meio.api.MeioResource;
 import com.meiosorganizado.meio.application.MeioService;
 import com.meiosorganizado.meio.application.dto.MeioDTO;
@@ -17,6 +16,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.Collections;
 
+import static java.time.format.DateTimeFormatter.ofPattern;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -32,6 +32,7 @@ public class MeioResourceTest {
 
     @MockBean
     private MeioService meioService;
+
 
     @Test
     void testCriarMeio() throws Exception {
@@ -51,7 +52,7 @@ public class MeioResourceTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.nome", is(meioDto.getNome())))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.tipoMeio.id", is(meioDto.getTipoMeio().getId())))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.tipoMeio.nome", is(meioDto.getTipoMeio().getNome())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.dataHoraCadastro", is(meioDto.getDataHoraCadastro())));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.dataHoraCadastro", is(meioDto.getDataHoraCadastro().format(ofPattern("MM/dd/yyyy hh:mm:ss")))));
     }
 
     @Test
@@ -66,7 +67,7 @@ public class MeioResourceTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.nome", is(meio.getNome())))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.tipoMeio.id", is(meio.getTipoMeio().getId())))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.tipoMeio.nome", is(meio.getTipoMeio().getNome())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.dataHoraCadastro", is(meio.getDataHoraCadastro())));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.dataHoraCadastro", is(meio.getDataHoraCadastro().format(ofPattern("MM/dd/yyyy hh:mm:ss")))));
     }
 
     @Test
@@ -88,7 +89,7 @@ public class MeioResourceTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.nome", is(meioDTO.getNome())))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.tipoMeio.id", is(meioDTO.getTipoMeio().getId())))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.tipoMeio.nome", is(meioDTO.getTipoMeio().getNome())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.dataHoraCadastro", is(meioDTO.getDataHoraCadastro())));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.dataHoraCadastro", is(meioDTO.getDataHoraCadastro().format(ofPattern("MM/dd/yyyy hh:mm:ss")))));
     }
 
     @Test
@@ -100,10 +101,10 @@ public class MeioResourceTest {
 
         mockMvc.perform(MockMvcRequestBuilders.get(path + "/pesquisar?nome=Teste"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id", is(meio.getId().intValue())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.nome", is(meio.getNome())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.tipoMeio.id", is(meio.getTipoMeio().getId())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.tipoMeio.nome", is(meio.getTipoMeio().getNome())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.dataHoraCadastro", is(meio.getDataHoraCadastro())));
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id", is(meio.getId().intValue())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].nome", is(meio.getNome())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].tipoMeio.id", is(meio.getTipoMeio().getId())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].tipoMeio.nome", is(meio.getTipoMeio().getNome())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].dataHoraCadastro", is(meio.getDataHoraCadastro().format(ofPattern("MM/dd/yyyy hh:mm:ss")))));
     }
 }
