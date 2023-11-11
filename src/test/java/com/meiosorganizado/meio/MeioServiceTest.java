@@ -79,6 +79,7 @@ class MeioServiceTest {
         when(meioRepository.findById(1L)).thenReturn(Optional.of(meio));
         when(meioRepository.verificarExistenciaNomeIgual(any(), any())).thenReturn(false);
         when(meioRepository.save(any(Meio.class))).thenReturn(meio);
+        when(tipoMeioRepository.findById(any())).thenReturn(Optional.ofNullable(TipoMeioMock.umTipoMeio().build()));
 
         // When
         val updatedMeio = meioService.update(meioDTO);

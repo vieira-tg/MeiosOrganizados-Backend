@@ -9,6 +9,7 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.meiosorganizado.tipomeio.application.dto.TipoMeioDTO;
 import com.meiosorganizado.tipomeio.domain.TipoMeio;
+import com.meiosorganizado.util.CustomLocalDateTimeDeserializer;
 import lombok.Builder;
 import lombok.Data;
 
@@ -28,7 +29,7 @@ public class MeioDTO {
     private TipoMeioDTO tipoMeio;
 
     @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    @JsonFormat(pattern = "MM/dd/yyyy hh:mm:ss")
+    @JsonDeserialize(using = CustomLocalDateTimeDeserializer.class)
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime dataHoraCadastro;
 }

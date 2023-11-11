@@ -32,7 +32,7 @@ public class Meio {
     @Column(name = "DATA_HORA_CADASTRO")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    @JsonFormat(pattern = "MM/dd/yyyy hh:mm:ss")
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime dataHoraCadastro;
 
     @PrePersist

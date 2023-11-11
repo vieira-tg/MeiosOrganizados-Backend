@@ -21,7 +21,7 @@ public class MeioService {
     private MeioRepository meioRepository;
 
     @Autowired
-    private TipoMeioService tipoMeioService;
+    private TipoMeioRepository tipoMeioRepository;
 
     public Meio save(MeioDTO meioDto) {
 
@@ -30,7 +30,7 @@ public class MeioService {
         val tipoMeioEntidade = Meio.builder()
                 .id(meioDto.getId())
                 .nome(meioDto.getNome())
-                .tipoMeio(tipoMeioService.findbyId(meioDto.getTipoMeio().getId()))
+                .tipoMeio(tipoMeioRepository.findById(meioDto.getTipoMeio().getId()).orElseThrow(() -> new NegocioException("Tipo do meio não encontrado!")))
                 .build();
 
         return this.meioRepository.save(tipoMeioEntidade);
@@ -43,7 +43,9 @@ public class MeioService {
         verificarNomeRepetido(entidade.getId(), meioDto.getNome());
 
         entidade.setNome(meioDto.getNome());
-        entidade.setTipoMeio(tipoMeioService.findbyId(meioDto.getTipoMeio().getId()));
+        entidade.setTipoMeio(
+                tipoMeioRepository.findById(meioDto.getTipoMeio().getId())
+                        .orElseThrow(() -> new NegocioException("Tipo do meio não encontrado!")));
 
         return this.meioRepository.save(entidade);
     }

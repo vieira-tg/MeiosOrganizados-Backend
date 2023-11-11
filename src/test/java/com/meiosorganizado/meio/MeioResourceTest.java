@@ -79,17 +79,17 @@ public class MeioResourceTest {
         when(meioService.save(any(MeioDTO.class))).thenReturn(meio);
 
         ObjectMapper objectMapper = new ObjectMapper();
-        String tipoMeioDTOJson = objectMapper.writeValueAsString(meioDTO);
+        String meioDTOJson = objectMapper.writeValueAsString(meioDTO);
 
         mockMvc.perform(MockMvcRequestBuilders.put(path)
-                        .content(tipoMeioDTOJson)
+                        .content(meioDTOJson)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id", is(meioDTO.getId().intValue())))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.nome", is(meioDTO.getNome())))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.tipoMeio.id", is(meioDTO.getTipoMeio().getId())))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.tipoMeio.nome", is(meioDTO.getTipoMeio().getNome())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.dataHoraCadastro", is(meioDTO.getDataHoraCadastro().format(ofPattern("MM/dd/yyyy hh:mm:ss")))));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.dataHoraCadastro", is(meioDTO.getDataHoraCadastro().format(ofPattern("dd/MM/yyyy hh:mm:ss")))));
     }
 
     @Test

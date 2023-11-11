@@ -42,10 +42,10 @@ public class AutorResourceTest {
         when(autorService.save(any(AutorDTO.class))).thenReturn(autor);
 
         ObjectMapper objectMapper = new ObjectMapper();
-        String tipoMeioDTOJson = objectMapper.writeValueAsString(autorDto);
+        String autorDTOJson = objectMapper.writeValueAsString(autorDto);
 
         mockMvc.perform(MockMvcRequestBuilders.post(path)
-                        .content(tipoMeioDTOJson)
+                        .content(autorDTOJson)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id", is(autorDto.getId().intValue())))
@@ -71,7 +71,7 @@ public class AutorResourceTest {
     }
 
     @Test
-    public void atualizarTipoMeio_DeveRetornarStatusOk() throws Exception {
+    public void atualizarAutor_DeveRetornarStatusOk() throws Exception {
         val autorDto = AutorMock.umAutorDTO().id(1l).build();
 
         val autor = AutorMock.umAutor().id(1l).build();

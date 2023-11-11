@@ -4,9 +4,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import com.meiosorganizado.util.CustomLocalDateDeserializer;
 import lombok.Builder;
 import lombok.Data;
 
@@ -28,12 +27,12 @@ public class AutorDTO {
 
     @NotNull(message = "É necessário informar a data de nascimento!")
     @JsonSerialize(using = LocalDateSerializer.class)
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    @JsonFormat(pattern = "MM/dd/yyyy")
+    @JsonDeserialize(using = CustomLocalDateDeserializer.class)
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataNascimento;
 
     @JsonSerialize(using = LocalDateSerializer.class)
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    @JsonFormat(pattern = "MM/dd/yyyy")
+    @JsonDeserialize(using = CustomLocalDateDeserializer.class)
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataFalecimento;
 }
