@@ -52,7 +52,7 @@ public class MeioResourceTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.nome", is(meioDto.getNome())))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.tipoMeio.id", is(meioDto.getTipoMeio().getId())))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.tipoMeio.nome", is(meioDto.getTipoMeio().getNome())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.dataHoraCadastro", is(meioDto.getDataHoraCadastro().format(ofPattern("MM/dd/yyyy hh:mm:ss")))));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.dataHoraCadastro", is(meioDto.getDataHoraCadastro().format(ofPattern("dd/MM/yyyy HH:mm:ss")))));
     }
 
     @Test
@@ -67,7 +67,7 @@ public class MeioResourceTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.nome", is(meio.getNome())))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.tipoMeio.id", is(meio.getTipoMeio().getId())))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.tipoMeio.nome", is(meio.getTipoMeio().getNome())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.dataHoraCadastro", is(meio.getDataHoraCadastro().format(ofPattern("MM/dd/yyyy hh:mm:ss")))));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.dataHoraCadastro", is(meio.getDataHoraCadastro().format(ofPattern("dd/MM/yyyy HH:mm:ss")))));
     }
 
     @Test
@@ -89,7 +89,7 @@ public class MeioResourceTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.nome", is(meioDTO.getNome())))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.tipoMeio.id", is(meioDTO.getTipoMeio().getId())))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.tipoMeio.nome", is(meioDTO.getTipoMeio().getNome())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.dataHoraCadastro", is(meioDTO.getDataHoraCadastro().format(ofPattern("dd/MM/yyyy hh:mm:ss")))));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.dataHoraCadastro", is(meioDTO.getDataHoraCadastro().format(ofPattern("dd/MM/yyyy HH:mm:ss")))));
     }
 
     @Test
@@ -105,6 +105,6 @@ public class MeioResourceTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].nome", is(meio.getNome())))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].tipoMeio.id", is(meio.getTipoMeio().getId())))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].tipoMeio.nome", is(meio.getTipoMeio().getNome())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].dataHoraCadastro", is(meio.getDataHoraCadastro().format(ofPattern("MM/dd/yyyy hh:mm:ss")))));
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].dataHoraCadastro", is(meio.getDataHoraCadastro().format(ofPattern("dd/MM/yyyy HH:mm:ss")))));
     }
 }
